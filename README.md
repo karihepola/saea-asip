@@ -3,7 +3,7 @@ Scripts for running results for the Surrogate-Assisted Optimization of Applicati
 [Zenodo dataset](https://zenodo.org/records/21649988)
 
 
-Download datasets
+Download datasets:
 ```bash
 ./scripts/init.sh
 ```
@@ -12,8 +12,6 @@ Download datasets
 - `synthesis_estimation/` — contains the code and data required for running synthesis estimation.
 
 To process the final optimization results:
-
-Download datasets
 ```bash
 python3 scripts/print_opt_results.py
 ```
