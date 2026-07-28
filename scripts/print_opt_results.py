@@ -228,9 +228,9 @@ def calc_nadirs():
                     f"{OPT_DATA_DIR}/saea_opt_data/"
                     f"{ensemble}_ensembles/run_{seed}/{gen}/results_combined.json"
                 )
-
-    for amount in FINE_TUNE_DATA_AMOUNTS:
-        json_files.extend(glob(f"{OPT_DATA_DIR}/model_opt_data/data_{amount}/run_{ensemble}_*.json"))
+    for ensemble in ENSEMBLES:
+        for amount in FINE_TUNE_DATA_AMOUNTS:
+            json_files.extend(glob(f"{OPT_DATA_DIR}/model_opt_data/data_{amount}/run_{ensemble}_*.json"))
 
     return find_nadir_points_fast(json_files)
 
