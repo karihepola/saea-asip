@@ -14,28 +14,10 @@ sys.path.append('..')
 from utils.BasicResNet import BasicResNet
 import utils.config as config
 
-from utils.architecture2 import Architecture
+from utils.Chip_Loader import ChipDataset
 
-class ChipDataset(torch.utils.data.Dataset):
-    def __init__(self, inp, out, mu, std):
-        self.inp = torch.from_numpy(inp).float()
-        self.out = torch.from_numpy(out).float()
+from utils.architecture import Architecture
 
-        self.mu = torch.from_numpy(mu).float()
-        self.std = torch.from_numpy(std).float()
-
-    def __len__(self):
-        return self.inp.size(0)
-
-    def __getitem__(self, idx):
-        x = (self.inp[idx] - self.mu) / self.std
-        y = self.out[idx]
-        return x, y
-
-
-
-
-import argparse
 
 def gen_dope_data():
     max_arch = Architecture(4, 8, 128, 2, 3, 255, 255, 1, 4, 5, 255, 2, 6, 7, 255)
@@ -137,7 +119,7 @@ def train(epoch, scheduler):
         x = x.to(device)
         y = y.to(device).view(-1)
         optimizer.zero_grad()
-        y_pred, _ = model(x)
+        y_pred = model(x)
         y_pred = y_pred.view(-1)
         loss = criterion(y_pred, y)
         loss.backward()
@@ -207,7 +189,7 @@ for epoch in range(1, epochs + 1):
         # Forward Pass
         with torch.no_grad():
             pred = model(v_inp)
-            predicted, _ = pred  # Flatten predictions
+            predicted = pred  # Flatten predictions
             predicted = predicted.view(-1)
             ground_truth = v_out.view(-1)
 

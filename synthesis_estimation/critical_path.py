@@ -14,27 +14,8 @@ sys.path.append('..')
 from utils.BasicResNet import BasicResNet
 import utils.config as config
 
-from utils.architecture2 import Architecture
-
-
-
-import argparse
-
-class ChipDataset(torch.utils.data.Dataset):
-    def __init__(self, inp, out, mu, std):
-        self.inp = torch.from_numpy(inp).float()
-        self.out = torch.from_numpy(out).float()
-
-        self.mu = torch.from_numpy(mu).float()
-        self.std = torch.from_numpy(std).float()
-
-    def __len__(self):
-        return self.inp.size(0)
-
-    def __getitem__(self, idx):
-        x = (self.inp[idx] - self.mu) / self.std
-        y = self.out[idx]
-        return x, y
+from utils.architecture import Architecture
+from utils.Chip_Loader import ChipDataset
 
 def gen_dope_data():
     max_arch = Architecture(4, 8, 128, 2, 3, 255, 255, 1, 4, 5, 255, 2, 6, 7, 255)
